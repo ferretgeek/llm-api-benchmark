@@ -1,38 +1,18 @@
-<div align="center">
-
-![LLM API benchmark](docs/images/social-preview.png)
-
 # LLM API benchmark
 
 [中文](README.md) · English
 
-[![CI](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/ci.yml/badge.svg)](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/codeql.yml/badge.svg)](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/codeql.yml)
-[![Demo](https://img.shields.io/badge/demo-GitHub%20Pages-5558f7)](https://ferretgeek.github.io/llm-api-benchmark/)
-[![Release](https://img.shields.io/github/v/release/ferretgeek/llm-api-benchmark)](https://github.com/ferretgeek/llm-api-benchmark/releases)
-[![License](https://img.shields.io/github/license/ferretgeek/llm-api-benchmark)](LICENSE)
+Measure how long an LLM API takes to start replying, how fast it produces output, and its cache usage and estimated cost, so you can compare endpoints under the same conditions.
 
-[Live demo](https://ferretgeek.github.io/llm-api-benchmark/) · [Deployment](docs/部署指南.md) · [Measurement method](docs/测量方法.md)
+**Requirements:** Python 3.10+ and your own endpoint URL, API key, and model name. Real benchmarks need internet access and may incur charges; the online demo uses simulated data.
 
-</div>
+[View the demo](https://ferretgeek.github.io/llm-api-benchmark/) · [Run locally](#run-locally) · [Measurement method](docs/测量方法.md)
+
+Requests run one at a time in fixed scenarios, with first-token latency, output speed, and usage reported separately. Warm-ups count toward cost but not the formal speed results.
+
+## Interface
 
 ![Dashboard](docs/images/dashboard.png)
-
-> For a given model endpoint: how long until the first token, how many tokens per second, how much cache hit, and what did this run cost?
-
-## Why this exists
-
-When picking a model or a relay, you'll see a lot of "measured 200 tok/s." That number usually means nothing, because it doesn't say:
-
-- Was it measured under concurrency? (Presenting throughput as single-request speed is the most common trick.)
-- Did the warm-up round count?
-- How much prompt cache was hit? (High-cache scenarios look dramatically better.)
-- How long was the wait for the first token? (For interactive feel, that often matters more than tokens per second.)
-- What reasoning effort was used?
-
-So this tool works differently: **lock the scenario, reasoning level, warm-up policy, and cache rules first, then use the complete `usage` payload** to report visible output speed, end-to-end speed, time to first token, cache hits, and API-equivalent cost separately.
-
-It isn't chasing a lucky peak — **it's chasing a number you can reproduce next week.**
 
 ## What you get
 

@@ -1,38 +1,18 @@
-<div align="center">
-
-![大模型接口测速台](docs/images/social-preview.png)
-
-# 大模型接口测速台
+# AI 接口测速工具
 
 中文 · [English](README_EN.md)
 
-[![CI](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/ci.yml/badge.svg)](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/codeql.yml/badge.svg)](https://github.com/ferretgeek/llm-api-benchmark/actions/workflows/codeql.yml)
-[![在线演示](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E6%BC%94%E7%A4%BA-GitHub%20Pages-5558f7)](https://ferretgeek.github.io/llm-api-benchmark/)
-[![Release](https://img.shields.io/github/v/release/ferretgeek/llm-api-benchmark?label=%E7%89%88%E6%9C%AC)](https://github.com/ferretgeek/llm-api-benchmark/releases)
-[![License](https://img.shields.io/github/license/ferretgeek/llm-api-benchmark?label=%E8%AE%B8%E5%8F%AF)](LICENSE)
+测试一个大模型 API 要等多久才开始回复、输出有多快，以及缓存命中和估算成本，帮助你在相同条件下对比不同接口。
 
-[在线演示](https://ferretgeek.github.io/llm-api-benchmark/) · [部署指南](docs/部署指南.md) · [测量方法](docs/测量方法.md)
+**使用前提：** Python 3.10+，以及你自己的模型接口地址、API Key 和模型名称。真实测速需要联网并可能产生费用；在线演示使用模拟数据。
 
-</div>
+[查看演示](https://ferretgeek.github.io/llm-api-benchmark/) · [本地启动](#本地启动) · [测量方法](docs/测量方法.md)
+
+测速按固定场景逐条发送请求，将首字延迟、输出速度和用量分开统计；预热消耗计入成本，不计入正式速度结果。
+
+## 界面
 
 ![面板界面](docs/images/dashboard.png)
-
-> 同一个模型接口，首字要等多久、每秒吐多少字、缓存命中多少、这一次到底花了多少钱。
-
-## 为什么会需要它
-
-选模型或选中转的时候，你会看到很多"实测 200 tok/s"。这个数字通常没什么意义，因为它没说：
-
-- 是不是并发跑出来的？（把吞吐当成单请求速度是最常见的作弊）
-- 有没有算预热那一轮？
-- 提示词缓存命中了多少？（高缓存场景下速度会好看很多）
-- 首字等了多久？（对交互体验来说，这一项往往比吐字速度更重要）
-- 推理档位是什么？
-
-这个工具的做法是：**先把场景、推理档位、预热策略和缓存规则锁定，再以完整的 `usage` 为准**，把可见输出速度、端到端速度、首字延迟、缓存命中和 API 等效成本分开呈现。
-
-它不追偶然峰值——**它追一个你下次能复现的数字。**
 
 ## 你会得到什么
 
